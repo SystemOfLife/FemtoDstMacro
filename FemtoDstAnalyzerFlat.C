@@ -53,45 +53,50 @@ void FemtoDstAnalyzerFlat(const Char_t *inFile = "AuAu27GeV/AuAu27_ar.list", con
     gSystem->Load("libStFemtoDst.so");
   #endif
 
-  // TH1D *H_Qx2_recenter = new TH1D("H_Qx2_recenter", "Q^{recenter}_{2}_{x} projection; Q_{2}_{x},[GeV/c];N_{count}",500,-60, 60);
-  // TH1D *H_Qy2_recenter = new TH1D("H_Qy2_recenter", "Q^{recenter}_{2}_{y} projection; Q_{2}_{y},[GeV/c];N_{count}",500,-60, 60);
-  // TH1D *H_Qx3_recenter = new TH1D("H_Qx3_recenter", "Q^{recenter}_{3}_{x} projection; Q_{3}_{x},[GeV/c];N_{count}",500,-60, 60);
-  // TH1D *H_Qy3_recenter = new TH1D("H_Qy3_recenter", "Q^{recenter}_{3}_{y} projection; Q_{3}_{y},[GeV/c];N_{count}",500,-60, 60);
   TH1D *H_Psi2 = new TH1D("H_Psi2","#psi_{2} of Event plane of 2 harmonic; #psi,[rad]",500,-TMath::Pi()/2.0-1, TMath::Pi()/2.0+1 );
   TH1D *H_Psi3 = new TH1D("H_Psi3","#psi_{3} of Event plane of 3 harmonic; #psi,[rad]",500,-TMath::Pi()/2.0-1, TMath::Pi()/2.0+1 );
   TH1D *H_Psi2_recenter = new TH1D("H_Psi2_recenter","#psi^{recenter}_{2} of Event plane of 2 harmonic; #psi,[rad]; N_{count}",500,-TMath::Pi()/2.0-1, TMath::Pi()/2.0+1 );
   TH1D *H_Psi3_recenter = new TH1D("H_Psi3_recenter","#psi^{recenter}_{3} of Event plane of 3 harmonic; #psi,[rad]; N_{count}",500,-TMath::Pi()/3.0-1, TMath::Pi()/3.0+1 );
   TH1D *H_Psi2_flat = new TH1D("H_Psi2_flat","#psi^{rec+flat}_{2} of Event plane of 2 harmonic; #psi,[rad]; N_{count}",500,-TMath::Pi()/2.0-1, TMath::Pi()/2.0+1 );
   TH1D *H_Psi3_flat = new TH1D("H_Psi3_flat","#psi^{rec+flat}_{3} of Event plane of 3 harmonic; #psi,[rad]; N_{count}",500,-TMath::Pi()/3.0-1, TMath::Pi()/3.0+1 );
-  // TProfile2D *P2_Qx2_cent_RunID = new TProfile2D("P2_Qx2_cent_RunID","Profile of Q_{2}_{x} on Centrality vs RunID",0.01e6, 12170000.0-0.0005, 12180000.0+0.0005, 9, -0.5, 8.5 );
-  // TProfile2D *P2_Qy2_cent_RunID = new TProfile2D("P2_Qy2_cent_RunID","Profile of Q_{2}_{y} on Centrality vs RunID",0.01e6, 12170000.0-0.0005, 12180000.0+0.0005, 9, -0.5, 8.5 );
-  // TProfile2D *P2_Qx3_cent_RunID = new TProfile2D("P2_Qx3_cent_RunID","Profile of Q_{3}_{x} on Centrality vs RunID",0.01e6, 12170000.0-0.0005, 12180000.0+0.0005, 9, -0.5, 8.5 );
-  // TProfile2D *P2_Qy3_cent_RunID = new TProfile2D("P2_Qy3_cent_RunID","Profile of Q_{3}_{y} on Centrality vs RunID",0.01e6, 12170000.0-0.0005, 12180000.0+0.0005, 9, -0.5, 8.5 );
+  //WEST
+  TH1D *H_Psi2_west = new TH1D("H_Psi2_west","#psi_{2} of Event plane of 2 harmonic; #psi,[rad]",500,-TMath::Pi()/2.0-1, TMath::Pi()/2.0+1 );
+  TH1D *H_Psi3_west = new TH1D("H_Psi3_west","#psi_{3} of Event plane of 3 harmonic; #psi,[rad]",500,-TMath::Pi()/2.0-1, TMath::Pi()/2.0+1 );
+  TH1D *H_Psi2_recenter_west = new TH1D("H_Psi2_recenter_west","#psi^{recenter}_{2} of Event plane of 2 harmonic; #psi,[rad]; N_{count}",500,-TMath::Pi()/2.0-1, TMath::Pi()/2.0+1 );
+  TH1D *H_Psi3_recenter_west = new TH1D("H_Psi3_recenter_west","#psi^{recenter}_{3} of Event plane of 3 harmonic; #psi,[rad]; N_{count}",500,-TMath::Pi()/3.0-1, TMath::Pi()/3.0+1 );
+  TH1D *H_Psi2_flat_west = new TH1D("H_Psi2_flat_west","#psi^{rec+flat}_{2} of Event plane of 2 harmonic; #psi,[rad]; N_{count}",500,-TMath::Pi()/2.0-1, TMath::Pi()/2.0+1 );
+  TH1D *H_Psi3_flat_west = new TH1D("H_Psi3_flat_west","#psi^{rec+flat}_{3} of Event plane of 3 harmonic; #psi,[rad]; N_{count}",500,-TMath::Pi()/3.0-1, TMath::Pi()/3.0+1 );
+  //EAST
+  TH1D *H_Psi2_east = new TH1D("H_Psi2_east","#psi_{2} of Event plane of 2 harmonic; #psi,[rad]",500,-TMath::Pi()/2.0-1, TMath::Pi()/2.0+1 );
+  TH1D *H_Psi3_east = new TH1D("H_Psi3_east","#psi_{3} of Event plane of 3 harmonic; #psi,[rad]",500,-TMath::Pi()/2.0-1, TMath::Pi()/2.0+1 );
+  TH1D *H_Psi2_recenter_east = new TH1D("H_Psi2_recenter_east","#psi^{recenter}_{2} of Event plane of 2 harmonic; #psi,[rad]; N_{count}",500,-TMath::Pi()/2.0-1, TMath::Pi()/2.0+1 );
+  TH1D *H_Psi3_recenter_east = new TH1D("H_Psi3_recenter_east","#psi^{recenter}_{3} of Event plane of 3 harmonic; #psi,[rad]; N_{count}",500,-TMath::Pi()/3.0-1, TMath::Pi()/3.0+1 );
+  TH1D *H_Psi2_flat_east = new TH1D("H_Psi2_flat_east","#psi^{rec+flat}_{2} of Event plane of 2 harmonic; #psi,[rad]; N_{count}",500,-TMath::Pi()/2.0-1, TMath::Pi()/2.0+1 );
+  TH1D *H_Psi3_flat_east = new TH1D("H_Psi3_flat_east","#psi^{rec+flat}_{3} of Event plane of 3 harmonic; #psi,[rad]; N_{count}",500,-TMath::Pi()/3.0-1, TMath::Pi()/3.0+1 );
 
-  // Profiles for cos and sin at v2
-  // TProfile2D *sin_v2[4];
-  // for (int i=0; i<4; i++){
-  //   sin_v2[i] = new TProfile2D(Form("sin_v2_prof_k=%i",i+1), Form("sin_v2_prof_k=%i",i+1), 0.01e6, 12170000.0-0.0005, 12180000.0+0.0005, 9, -0.5, 8.5);
-  // }
-  // TProfile2D *cos_v2[4];
-  // for (int i=0; i<4; i++){
-  //   cos_v2[i] = new TProfile2D(Form("cos_v2_prof_k=%i",i+1), Form("cos_v2_prof_k=%i",i+1), 0.01e6, 12170000.0-0.0005, 12180000.0+0.0005, 9, -0.5, 8.5);
-  // }
-  // // Profiles for cos and sin at v3
-  // TProfile2D *sin_v3[4];
-  // for (int i=0; i<4; i++){
-  //   sin_v3[i] = new TProfile2D(Form("sin_v3_prof_k=%i",i+1), Form("sin_v3_prof_k=%i",i+1), 0.01e6, 12170000.0-0.0005, 12180000.0+0.0005, 9, -0.5, 8.5);
-  // }
-  // TProfile2D *cos_v3[4];
-  // for (int i=0; i<4; i++){
-  //   cos_v3[i] = new TProfile2D(Form("cos_v3_prof_k=%i",i+1), Form("cos_v3_prof_k=%i",i+1), 0.01e6, 12170000.0-0.0005, 12180000.0+0.0005, 9, -0.5, 8.5);
-  // }
+  //Profiles for resolution stage
+  TProfile *P_square_resolution2 = new TProfile("P_square_resolution2","Profile of <cos(2*(#psi_{2,#pm}-#psi_{2,#mp}))>; Centrality bins ", 9, -0.5, 8.5);
+  TProfile *P_square_resolution3 = new TProfile("P_square_resolution3","Profile of <cos(2*(#psi_{3,#pm}-#psi_{3,#mp}))>; Centrality bins ", 9, -0.5, 8.5);
+  
+
+
+
 
   TFile *readf = new TFile(flatFileName,"READ");
   TProfile2D *P3_Qx2 = (TProfile2D*)readf->Get("P2_Qx2_cent_RunID");
   TProfile2D *P3_Qy2 = (TProfile2D*)readf->Get("P2_Qy2_cent_RunID");
   TProfile2D *P3_Qx3 = (TProfile2D*)readf->Get("P2_Qx3_cent_RunID");
   TProfile2D *P3_Qy3 = (TProfile2D*)readf->Get("P2_Qy3_cent_RunID");
+  //_west
+  TProfile2D *P3_Qx2_west = (TProfile2D*)readf->Get("P2_Qx2_cent_RunID_west");
+  TProfile2D *P3_Qy2_west = (TProfile2D*)readf->Get("P2_Qy2_cent_RunID_west");
+  TProfile2D *P3_Qx3_west = (TProfile2D*)readf->Get("P2_Qx3_cent_RunID_west");
+  TProfile2D *P3_Qy3_west = (TProfile2D*)readf->Get("P2_Qy3_cent_RunID_west");
+  //_east
+  TProfile2D *P3_Qx2_east = (TProfile2D*)readf->Get("P2_Qx2_cent_RunID_east");
+  TProfile2D *P3_Qy2_east = (TProfile2D*)readf->Get("P2_Qy2_cent_RunID_east");
+  TProfile2D *P3_Qx3_east = (TProfile2D*)readf->Get("P2_Qx3_cent_RunID_east");
+  TProfile2D *P3_Qy3_east = (TProfile2D*)readf->Get("P2_Qy3_cent_RunID_east");
 
   // Profile for cos and sin at v2
   TProfile2D *p_sin_v2[4];
@@ -110,6 +115,46 @@ void FemtoDstAnalyzerFlat(const Char_t *inFile = "AuAu27GeV/AuAu27_ar.list", con
   }
   for (int i=0; i<4; i++){
     p_cos_v3[i] = (TProfile2D*)readf -> Get(Form("cos_v3_prof_k=%i",i+1));
+  }  
+
+  //WEST
+  // Profile for cos and sin at v2
+  TProfile2D *p_sin_v2_west[4];
+  TProfile2D *p_cos_v2_west[4];
+  for (int i=0; i<4; i++){
+    p_sin_v2_west[i] = (TProfile2D*)readf -> Get(Form("sin_v2_west_prof_k=%i",i+1));
+  }
+  for (int i=0; i<4; i++){
+    p_cos_v2_west[i] = (TProfile2D*)readf -> Get(Form("cos_v2_west_prof_k=%i",i+1));
+  }
+  // Profile for cos and sin at v3
+  TProfile2D *p_sin_v3_west[4];
+  TProfile2D *p_cos_v3_west[4];
+  for (int i=0; i<4; i++){
+    p_sin_v3_west[i] = (TProfile2D*)readf -> Get(Form("sin_v3_west_prof_k=%i",i+1));
+  }
+  for (int i=0; i<4; i++){
+    p_cos_v3_west[i] = (TProfile2D*)readf -> Get(Form("cos_v3_west_prof_k=%i",i+1));
+  }  
+
+  //EAST
+  // Profile for cos and sin at v2
+  TProfile2D *p_sin_v2_east[4];
+  TProfile2D *p_cos_v2_east[4];
+  for (int i=0; i<4; i++){
+    p_sin_v2_east[i] = (TProfile2D*)readf -> Get(Form("sin_v2_east_prof_k=%i",i+1));
+  }
+  for (int i=0; i<4; i++){
+    p_cos_v2_east[i] = (TProfile2D*)readf -> Get(Form("cos_v2_east_prof_k=%i",i+1));
+  }
+  // Profile for cos and sin at v3
+  TProfile2D *p_sin_v3_east[4];
+  TProfile2D *p_cos_v3_east[4];
+  for (int i=0; i<4; i++){
+    p_sin_v3_east[i] = (TProfile2D*)readf -> Get(Form("sin_v3_east_prof_k=%i",i+1));
+  }
+  for (int i=0; i<4; i++){
+    p_cos_v3_east[i] = (TProfile2D*)readf -> Get(Form("cos_v3_east_prof_k=%i",i+1));
   }  
 
   StFemtoDstReader* femtoReader = new StFemtoDstReader(inFile);
@@ -133,8 +178,10 @@ void FemtoDstAnalyzerFlat(const Char_t *inFile = "AuAu27GeV/AuAu27_ar.list", con
 
   std::cout << "Number of events to read: " << events2read << std::endl;
 
-  Double_t omega=0, Qx2=0, Qy2=0, Qx2_recenter=0, Qy2_recenter=0, Psi2=0, Psi2_recenter=0, Psi2_flat=0, delta_Psi2=0;
-  Double_t Qx3=0, Qy3=0, Qx3_recenter=0, Qy3_recenter=0, Psi3=0, Psi3_recenter=0, Psi3_flat=0, delta_Psi3=0;
+  Double_t omega=0, Qx2=0, Qy2=0, Qx2_recenter=0, Qy2_recenter=0, Psi2=0, Psi2_recenter=0, delta_Psi2=0, Psi2_flat=0;
+  Double_t Qx3=0, Qy3=0, Qx3_recenter=0, Qy3_recenter=0, Psi3=0, Psi3_recenter=0, delta_Psi3=0, Psi3_flat=0;
+  Double_t Q2_west=0, Qx2_west=0, Qy2_west=0, Psi2_west=0, Q3_west=0, Qx3_west=0, Qy3_west=0, Psi3_west=0, Qx2_recenter_west=0, Qy2_recenter_west=0, Qx3_recenter_west=0, Qy3_recenter_west=0, Psi2_recenter_west=0, Psi3_recenter_west=0, Psi2_flat_west=0, Psi3_flat_west=0, delta_Psi2_west=0, delta_Psi3_west=0;
+  Double_t Q2_east=0, Qx2_east=0, Qy2_east=0, Psi2_east=0, Q3_east=0, Qx3_east=0, Qy3_east=0, Psi3_east=0, Qx2_recenter_east=0, Qy2_recenter_east=0, Qx3_recenter_east=0, Qy3_recenter_east=0, Psi3_recenter_east=0, Psi2_recenter_east=0, Psi2_flat_east=0, Psi3_flat_east=0, delta_Psi2_east=0, delta_Psi3_east=0;
 
   // Loop over events
   for(Long64_t iEvent=0; iEvent<events2read; iEvent++) {
@@ -170,8 +217,13 @@ void FemtoDstAnalyzerFlat(const Char_t *inFile = "AuAu27GeV/AuAu27_ar.list", con
     Int_t nTracks = dst->numberOfTracks();
 
     //Q-vector cleaning in new event
-    Qx2=0, Qy2=0, Qx2_recenter=0, Qy2_recenter=0, Psi2=0, Psi2_recenter=0, Psi2_flat=0, delta_Psi2=0;
-    Qx3=0, Qy3=0, Qx3_recenter=0, Qy3_recenter=0, Psi3=0, Psi3_recenter=0, Psi3_flat=0, delta_Psi3=0;
+    Qx2=0; Qy2=0; Qx2_recenter=0; Qy2_recenter=0; Psi2=0; Psi2_recenter=0; Psi2_flat=0; delta_Psi2=0;
+    Qx3=0; Qy3=0; Qx3_recenter=0; Qy3_recenter=0; Psi3=0; Psi3_recenter=0; Psi3_flat=0; delta_Psi3=0;
+
+    Qx2_west=0; Qy2_west=0; Qx2_recenter_west=0; Qy2_recenter_west=0; Psi2_west=0; Psi2_recenter_west=0; Psi2_flat_west=0; delta_Psi2_west=0;
+    Qx3_east=0; Qy3_east=0; Qx3_recenter_east=0; Qy3_recenter_east=0; Psi3_east=0; Psi3_recenter_east=0; Psi3_flat_east=0; delta_Psi3_east=0;
+
+
 
     // Track loop
     for(Int_t iTrk=0; iTrk<nTracks; iTrk++) {
@@ -205,6 +257,19 @@ void FemtoDstAnalyzerFlat(const Char_t *inFile = "AuAu27GeV/AuAu27_ar.list", con
       Qy2+= omega*sin(2*(femtoTrack->phi()) );
       Qx3+= omega*cos(3*(femtoTrack->phi()) );
       Qy3+= omega*sin(3*(femtoTrack->phi()) );
+      if(femtoTrack->eta()>0.05){
+        Qx2_east+= omega*cos(2*(femtoTrack->phi()) );
+        Qy2_east+= omega*sin(2*(femtoTrack->phi()) );
+        Qx3_east+= omega*cos(3*(femtoTrack->phi()) );
+        Qy3_east+= omega*sin(3*(femtoTrack->phi()) );
+      }
+
+      if(femtoTrack->eta()<-0.05){
+        Qx2_west+= omega*cos(2*(femtoTrack->phi()) );
+        Qy2_west+= omega*sin(2*(femtoTrack->phi()) );
+        Qx3_west+= omega*cos(3*(femtoTrack->phi()) );
+        Qy3_west+= omega*sin(3*(femtoTrack->phi()) );
+      }
 
       // Check if track has TOF signal
       if ( femtoTrack->isTofTrack() ) {
@@ -215,15 +280,41 @@ void FemtoDstAnalyzerFlat(const Char_t *inFile = "AuAu27GeV/AuAu27_ar.list", con
 
     //Finding Q2,Q3,Psi2,Psi3
   Psi2=1.0/2.0*(TMath::ATan2(Qy2, Qx2)); //(TMath::Sqrt(event->refMult()))
-  Psi3=1.0/3.0*(TMath::ATan2(Qy3, Qx3)); 
+  Psi3=1.0/3.0*(TMath::ATan2(Qy3, Qx3));
+  //------west arm Q
+    Psi2_west=1.0/2.0*(TMath::ATan2(Qy2_west, Qx2_west)); //(TMath::Sqrt(event->refMult()))
+    Psi3_west=1.0/3.0*(TMath::ATan2(Qy3_west, Qx3_west)); 
+    Q2_west=TMath::Sqrt(pow(Qx2_west,2)+pow(Qy2_west,2));
+    Q3_west=TMath::Sqrt(pow(Qx3_west,2)+pow(Qy3_west,2));
+    //-----east Q
+    Psi2_east=1.0/2.0*(TMath::ATan2(Qy2_east, Qx2_east)); //(TMath::Sqrt(event->refMult()))
+    Psi3_east=1.0/3.0*(TMath::ATan2(Qy3_east, Qx3_east)); 
+    Q2_east=TMath::Sqrt(pow(Qx2_east,2)+pow(Qy2_east,2));
+    Q3_east=TMath::Sqrt(pow(Qx3_east,2)+pow(Qy3_east,2));
 
   Qx2_recenter=Qx2- P3_Qx2->GetBinContent(P3_Qx2->FindBin(event->runId(), event->cent9()));
   Qy2_recenter=Qy2- P3_Qy2->GetBinContent(P3_Qy2->FindBin(event->runId(), event->cent9()));
   Qx3_recenter=Qx3- P3_Qx3->GetBinContent(P3_Qx3->FindBin(event->runId(), event->cent9()));
   Qy3_recenter=Qy3- P3_Qy3->GetBinContent(P3_Qy3->FindBin(event->runId(), event->cent9()));
+  //----_west
+  Qx2_recenter_west=Qx2_west- P3_Qx2_west->GetBinContent(P3_Qx2_west->FindBin(event->runId(), event->cent9()));
+  Qy2_recenter_west=Qy2_west- P3_Qy2_west->GetBinContent(P3_Qy2_west->FindBin(event->runId(), event->cent9()));
+  Qx3_recenter_west=Qx3_west- P3_Qx3_west->GetBinContent(P3_Qx3_west->FindBin(event->runId(), event->cent9()));
+  Qy3_recenter_west=Qy3_west- P3_Qy3_west->GetBinContent(P3_Qy3_west->FindBin(event->runId(), event->cent9()));
+  //----east
+  Qx2_recenter_east=Qx2_east- P3_Qx2_east->GetBinContent(P3_Qx2_east->FindBin(event->runId(), event->cent9()));
+  Qy2_recenter_east=Qy2_east- P3_Qy2_east->GetBinContent(P3_Qy2_east->FindBin(event->runId(), event->cent9()));
+  Qx3_recenter_east=Qx3_east- P3_Qx3_east->GetBinContent(P3_Qx3_east->FindBin(event->runId(), event->cent9()));
+  Qy3_recenter_east=Qy3_east- P3_Qy3_east->GetBinContent(P3_Qy3_east->FindBin(event->runId(), event->cent9()));
 
   Psi2_recenter=1.0/2.0*(TMath::ATan2(Qy2_recenter, Qx2_recenter)); //(TMath::Sqrt(event->refMult()))
   Psi3_recenter=1.0/3.0*(TMath::ATan2(Qy3_recenter, Qx3_recenter));
+  //_west
+  Psi2_recenter_west=1.0/2.0*(TMath::ATan2(Qy2_recenter_west, Qx2_recenter_west)); //(TMath::Sqrt(event->refMult()))
+  Psi3_recenter_west=1.0/3.0*(TMath::ATan2(Qy3_recenter_west, Qx3_recenter_west));
+  //_east
+  Psi2_recenter_east=1.0/2.0*(TMath::ATan2(Qy2_recenter_east, Qx2_recenter_east)); //(TMath::Sqrt(event->refMult()))
+  Psi3_recenter_east=1.0/3.0*(TMath::ATan2(Qy3_recenter_east, Qx3_recenter_east));
 
   for (int i=0; i<4; i++){
       delta_Psi2 += 2.0/( (Double_t)i+1.0)*(p_cos_v2[i]->GetBinContent(p_cos_v2[i]->FindBin(event->runId(), event->cent9()))*TMath::Sin((i+1)*2*Psi2_recenter)
@@ -239,49 +330,95 @@ void FemtoDstAnalyzerFlat(const Char_t *inFile = "AuAu27GeV/AuAu27_ar.list", con
 
     Psi3_flat += Psi3_recenter + 1.0/3.0*delta_Psi3;
 
-  // P2_Qx2_cent_RunID->Fill(event->runId(), event->cent9(), Qx2, 1);
-  // P2_Qy2_cent_RunID->Fill(event->runId(), event->cent9(), Qy2, 1);
-  // P2_Qx3_cent_RunID->Fill(event->runId(), event->cent9(), Qx3, 1);
-  // P2_Qy3_cent_RunID->Fill(event->runId(), event->cent9(), Qy3, 1);
+  //WEST
+  for (int i=0; i<4; i++){
+      delta_Psi2_west += 2.0/( (Double_t)i+1.0)*(p_cos_v2_west[i]->GetBinContent(p_cos_v2_west[i]->FindBin(event->runId(), event->cent9()))*TMath::Sin((i+1)*2*Psi2_recenter_west)
+      -p_sin_v2_west[i]->GetBinContent(p_sin_v2_west[i]->FindBin(event->runId(), event->cent9()))*TMath::Cos((i+1)*2*Psi2_recenter_west) );
+    }
+
+    Psi2_flat_west += Psi2_recenter_west + 1.0/2.0*delta_Psi2_west;
+
+  for (int i=0; i<4; i++){
+    delta_Psi3 += 2.0/( (Double_t)i+1.0)*(p_cos_v3[i]->GetBinContent(p_cos_v3[i]->FindBin(event->runId(), event->cent9()))*TMath::Sin((i+1)*3*Psi3_recenter)
+    -p_sin_v3[i]->GetBinContent(p_sin_v3[i]->FindBin(event->runId(), event->cent9()))*TMath::Cos((i+1)*3*Psi3_recenter) );
+  }
+
+    Psi3_flat_west += Psi3_recenter_west + 1.0/3.0*delta_Psi3_west;
+
+  //EAST
+  for (int i=0; i<4; i++){
+      delta_Psi2_east += 2.0/( (Double_t)i+1.0)*(p_cos_v2_east[i]->GetBinContent(p_cos_v2_east[i]->FindBin(event->runId(), event->cent9()))*TMath::Sin((i+1)*2*Psi2_recenter_east)
+      -p_sin_v2_east[i]->GetBinContent(p_sin_v2_east[i]->FindBin(event->runId(), event->cent9()))*TMath::Cos((i+1)*2*Psi2_recenter_east) );
+    }
+
+    Psi2_flat_east += Psi2_recenter_east + 1.0/2.0*delta_Psi2_east;
+
+  for (int i=0; i<4; i++){
+    delta_Psi3 += 2.0/( (Double_t)i+1.0)*(p_cos_v3[i]->GetBinContent(p_cos_v3[i]->FindBin(event->runId(), event->cent9()))*TMath::Sin((i+1)*3*Psi3_recenter)
+    -p_sin_v3[i]->GetBinContent(p_sin_v3[i]->FindBin(event->runId(), event->cent9()))*TMath::Cos((i+1)*3*Psi3_recenter) );
+  }
+
+    Psi3_flat_east += Psi3_recenter_east + 1.0/3.0*delta_Psi3_east;
 
   
-
-  // H_Qx2_recenter->Fill(Qx2_recenter);
-  // H_Qy2_recenter->Fill(Qy2_recenter);
-  // H_Qx3_recenter->Fill(Qx3_recenter);
-  // H_Qy3_recenter->Fill(Qy3_recenter);
   H_Psi2->Fill(Psi2);
   H_Psi3->Fill(Psi3);
   H_Psi2_recenter->Fill(Psi2_recenter);
   H_Psi3_recenter->Fill(Psi3_recenter);
   H_Psi2_flat->Fill(Psi2_flat);
   H_Psi3_flat->Fill(Psi3_flat);
+  //_west
+  H_Psi2_west->Fill(Psi2_west);
+  H_Psi3_west->Fill(Psi3_west);
+  H_Psi2_recenter_west->Fill(Psi2_recenter_west);
+  H_Psi3_recenter_west->Fill(Psi3_recenter_west);
+  H_Psi2_flat_west->Fill(Psi2_flat_west);
+  H_Psi3_flat_west->Fill(Psi3_flat_west);
+  //_east
+  H_Psi2_east->Fill(Psi2_east);
+  H_Psi3_east->Fill(Psi3_east);
+  H_Psi2_recenter_east->Fill(Psi2_recenter_east);
+  H_Psi3_recenter_east->Fill(Psi3_recenter_east);
+  H_Psi2_flat_east->Fill(Psi2_flat_east);
+  H_Psi3_flat_east->Fill(Psi3_flat_east);
+
+  P_square_resolution2->Fill(event->cent9(), TMath::Cos(2*( Psi2_flat_west - Psi2_flat_east )) );
+  P_square_resolution3->Fill(event->cent9(), TMath::Cos(3*( Psi3_flat_west - Psi3_flat_east )) );
 
   } //for(Long64_t iEvent=0; iEvent<events2read; iEvent++)
+
+
+
+
+
 
   //Saving our files
   TFile *savefile = new TFile(outFileName, "RECREATE");
 
-  // H_Qx2_recenter->Write();
-  // H_Qy2_recenter->Write();
-  // H_Qx3_recenter->Write();
-  // H_Qy3_recenter->Write();
   H_Psi2->Write();
   H_Psi3->Write();
   H_Psi2_recenter->Write();
   H_Psi3_recenter->Write();
   H_Psi2_flat->Write();
   H_Psi3_flat->Write();
-  // P2_Qx2_cent_RunID->Write();
-  // P2_Qy2_cent_RunID->Write();
-  // P2_Qx3_cent_RunID->Write();
-  // P2_Qy3_cent_RunID->Write();
-  // for (int i=0; i<4; i++){
-  //   sin_v2[i]->Write();
-  //   cos_v2[i]->Write();
-  //   sin_v3[i]->Write();
-  //   cos_v3[i]->Write();
-  // }
+  //_west
+  H_Psi2_west->Write();
+  H_Psi3_west->Write();
+  H_Psi2_recenter_west->Write();
+  H_Psi3_recenter_west->Write();
+  H_Psi2_flat_west->Write();
+  H_Psi3_flat_west->Write();
+  //_east
+  H_Psi2_east->Write();
+  H_Psi3_east->Write();
+  H_Psi2_recenter_east->Write();
+  H_Psi3_recenter_east->Write();
+  H_Psi2_flat_east->Write();
+  H_Psi3_flat_east->Write();
+
+  P_square_resolution2->Write();
+  P_square_resolution3->Write();
+  
 
   savefile->Close();
 
