@@ -153,6 +153,7 @@ void FemtoDstAnalyzer(const Char_t *inFile = "AuAu27GeV/AuAu27_ar.list", const C
   Double_t Q3=0,Qx3=0,Qy3=0,Psi3=0;
   Double_t Q2_west=0, Qx2_west=0, Qy2_west=0, Psi2_west=0, Q3_west=0, Qx3_west=0, Qy3_west=0, Psi3_west=0;
   Double_t Q2_east=0, Qx2_east=0, Qy2_east=0, Psi2_east=0, Q3_east=0, Qx3_east=0, Qy3_east=0, Psi3_east=0;
+  Double_t N_east=0, N_west=0;
 
 
   StFemtoDstReader* femtoReader = new StFemtoDstReader(inFile);
@@ -208,9 +209,9 @@ void FemtoDstAnalyzer(const Char_t *inFile = "AuAu27GeV/AuAu27_ar.list", const C
     
 
     // Reject vertices that are far from the central membrane along the beam
-    if( TMath::Abs( pVtx.Z() ) > 40. ) continue;
+    if( TMath::Abs( pVtx.Z() ) > 70. ) continue;
     if( TMath::Abs( pow(pVtx.X(), 2)+ pow(pVtx.Y(), 2)) > 2. ) continue;
-    if (event->vpdVz() == 0.0) continue;
+    //if (event->vpdVz() == 0.0) continue;
 
     /////////
     //Filling event Histograms
@@ -225,6 +226,7 @@ void FemtoDstAnalyzer(const Char_t *inFile = "AuAu27GeV/AuAu27_ar.list", const C
     Q2=0; Qx2=0; Qy2=0; Psi2=0; Q3=0; Qx3=0; Qy3=0; Psi3=0;
     Q2_west=0; Qx2_west=0; Qy2_west=0; Psi2_west=0; Q3_west=0; Qx3_west=0; Qy3_west=0; Psi3_west=0;
     Q2_east=0; Qx2_east=0; Qy2_east=0; Psi2_east=0; Q3_east=0; Qx3_east=0; Qy3_east=0; Psi3_east=0;
+    N_east= 0; N_west=0;
 
 
 
@@ -244,22 +246,22 @@ void FemtoDstAnalyzer(const Char_t *inFile = "AuAu27GeV/AuAu27_ar.list", const C
       // Must be a primary track
       if ( !femtoTrack->isPrimary() ) continue;
 
-      if( (femtoTrack->dEdx()) == 0  ) continue;
+      if( (femtoTrack->dEdx()) == 0 ) continue;
 
       // Simple single-track cut
-      if( femtoTrack->gMom().Mag() < 0.1 || femtoTrack->gDCA(pVtx).Mag() > 3. ) {
+      if( femtoTrack->gMom().Mag() < 0.1 || femtoTrack->gDCA(pVtx).Mag() > 2. ) {
         continue;
       }
-      if( femtoTrack -> p() < 0.1 || femtoTrack -> p() > 10 || TMath::Abs( femtoTrack -> eta() ) > 1 || femtoTrack -> nHits() < 15 ) { /**/ //15 из 45 падов сработали, при eta>1 эффективность сильно падает
+      if( femtoTrack -> p() < 0.15 || femtoTrack -> p() > 5 || 
+      TMath::Abs( femtoTrack -> eta() ) > 1 || femtoTrack -> nHits() < 15 ) { /**/ //15 из 45 падов сработали, при eta>1 эффективность сильно падает
         continue;
       }
 
-      if(femtoTrack->pt()>2.0){ 
-        omega=2.0;
+      if(femtoTrack->pt()>2.0 || femtoTrack->pt()<0.2){ 
+        continue;
       }
-      else { 
-        omega=femtoTrack->pt();
-      }
+      
+      omega=femtoTrack->pt();
       //Qx and Qy
       Qx2+= omega*cos(2*(femtoTrack->phi()) );
       Qy2+= omega*sin(2*(femtoTrack->phi()) );
@@ -270,6 +272,7 @@ void FemtoDstAnalyzer(const Char_t *inFile = "AuAu27GeV/AuAu27_ar.list", const C
         Qy2_east+= omega*sin(2*(femtoTrack->phi()) );
         Qx3_east+= omega*cos(3*(femtoTrack->phi()) );
         Qy3_east+= omega*sin(3*(femtoTrack->phi()) );
+        N_east++;
       }
 
       if(femtoTrack->eta()<-0.05){
@@ -277,7 +280,21 @@ void FemtoDstAnalyzer(const Char_t *inFile = "AuAu27GeV/AuAu27_ar.list", const C
         Qy2_west+= omega*sin(2*(femtoTrack->phi()) );
         Qx3_west+= omega*cos(3*(femtoTrack->phi()) );
         Qy3_west+= omega*sin(3*(femtoTrack->phi()) );
+        N_west++;
       }
+
+      if( N_west != 0 ){
+      Qx2_west = Qx2_west / N_west; 
+      Qy2_west = Qy2_west / N_west;
+      Qx3_west = Qx3_west / N_west;
+      Qy3_west = Qy3_west / N_west;
+    }
+    if( N_east != 0 ){
+      Qx2_east = Qx2_east / N_east; 
+      Qy2_east = Qy2_east / N_east;
+      Qx3_east = Qx3_east / N_east;
+      Qy3_east = Qy3_east / N_east;
+    }
 
       //Track histograms
       H_dEdx->Fill(femtoTrack->dEdx());
