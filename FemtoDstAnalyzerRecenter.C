@@ -198,13 +198,15 @@ void FemtoDstAnalyzerRecenter(const Char_t *inFile = "AuAu27GeV/AuAu27_ar.list",
   
   Double_t Q2_west=0, Qx2_west=0, Qy2_west=0, Psi2_west=0, Q3_west=0, Qx3_west=0, Qy3_west=0, Psi3_west=0, Qx2_recenter_west=0, Qy2_recenter_west=0, Qx3_recenter_west=0, Qy3_recenter_west=0, Psi2_recenter_west=0,Psi3_recenter_west=0, Psi2_flat_west=0,Psi3_flat_west=0, delta_Psi2_west=0;
   Double_t Q2_east=0, Qx2_east=0, Qy2_east=0, Psi2_east=0, Q3_east=0, Qx3_east=0, Qy3_east=0, Psi3_east=0, Qx2_recenter_east=0, Qy2_recenter_east=0, Qx3_recenter_east=0, Qy3_recenter_east=0, Psi3_recenter_east=0,Psi2_recenter_east=0, Psi2_flat_east=0,Psi3_flat_east=0, delta_Psi2_east=0;
-  Double_t N_west=0, N_east=0;
+  Double_t N_west=0, N_east=0, N=0;
 
   // Loop over events
   for(Long64_t iEvent=0; iEvent<events2read; iEvent++) {
 
-    // std::cout << "Working on event #[" << (iEvent+1)
-    //   	      << "/" << events2read << "]" << std::endl;
+        if ((iEvent+1) % 10000 == 0){
+      std::cout << "Working on event #[" << (iEvent + 1)
+                << "/" << events2read << "]" << std::endl;
+    }
 
     Bool_t readEvent = femtoReader->readFemtoEvent(iEvent);
     if( !readEvent ) {
@@ -226,7 +228,7 @@ void FemtoDstAnalyzerRecenter(const Char_t *inFile = "AuAu27GeV/AuAu27_ar.list",
     TVector3 pVtx = event->primaryVertex();
 
     // Reject vertices that are far from the central membrane along the beam
-    if( TMath::Abs( pVtx.Z() ) > 70. ) continue;
+    if( TMath::Abs( pVtx.Z() ) > 40. ) continue;
     if( TMath::Abs( pow(pVtx.X(), 2)+ pow(pVtx.Y(), 2)) > 2. ) continue;
     //if (event->vpdVz() == 0.0) continue;
 
@@ -241,7 +243,7 @@ void FemtoDstAnalyzerRecenter(const Char_t *inFile = "AuAu27GeV/AuAu27_ar.list",
     Qx3=0; Qy3=0; Qx3_recenter=0; Qy3_recenter=0; Psi3=0; Psi3_recenter=0;
     Qx3_west=0; Qy3_west=0; Qx3_recenter_west=0; Qy3_recenter_west=0; Psi3_west=0; Psi3_recenter_west=0;
     Qx3_east=0; Qy3_east=0; Qx3_recenter_east=0; Qy3_recenter_east=0; Psi3_east=0; Psi3_recenter_east=0;
-    N_west=0; N_east=0;
+    N_west=0; N_east=0; N=0;
 
     // Track loop
     for(Int_t iTrk=0; iTrk<nTracks; iTrk++) {
@@ -258,14 +260,20 @@ void FemtoDstAnalyzerRecenter(const Char_t *inFile = "AuAu27GeV/AuAu27_ar.list",
 
       // Simple single-track cut
       if( femtoTrack->gMom().Mag() < 0.1 || femtoTrack->gDCA(pVtx).Mag() > 2. ) {
-        continue;
+         continue;
       }
-      if( femtoTrack -> p() < 0.15 || femtoTrack -> p() > 5 || TMath::Abs( femtoTrack -> eta() ) > 1 || femtoTrack -> nHits() < 15 ) { /**/ //15 из 45 падов сработали, при eta>1 эффективность сильно падает
-        continue;
+      /*//Для индитификации частиц
+      if( TMath::Abs( femtoTrack -> eta() ) > 1.0 || femtoTrack -> nHits() < 15 || 
+          femtoTrack -> p() < 0.15 || femtoTrack -> p() > 5.0) {
+         continue;
       }
-
-      if(femtoTrack->pt()>2.0 || femtoTrack->pt()<0.2){ 
-        continue;
+      */
+      // для заряженных адронов
+      if( TMath::Abs( femtoTrack -> eta() ) > 1.0 ||
+          femtoTrack -> nHits() < 15 ||
+          femtoTrack -> pt() < 0.2 || 
+          femtoTrack -> pt() > 2.0 ) {
+         continue;
       }
       
       omega=femtoTrack->pt();
@@ -275,6 +283,7 @@ void FemtoDstAnalyzerRecenter(const Char_t *inFile = "AuAu27GeV/AuAu27_ar.list",
       Qy2+= omega*sin(2*(femtoTrack->phi()) );
       Qx3+= omega*cos(3*(femtoTrack->phi()) );
       Qy3+= omega*sin(3*(femtoTrack->phi()) );
+      N++;
       if(femtoTrack->eta()>0.05){
         Qx2_east+= omega*cos(2*(femtoTrack->phi()) );
         Qy2_east+= omega*sin(2*(femtoTrack->phi()) );
@@ -298,7 +307,12 @@ void FemtoDstAnalyzerRecenter(const Char_t *inFile = "AuAu27GeV/AuAu27_ar.list",
 
     } //for(Int_t iTrk=0; iTrk<nTracks; iTrk++)
 
-
+    if( N != 0){
+      Qx2= Qx2 / N;
+      Qy2= Qy2 / N;
+      Qx3= Qx3 / N;
+      Qy3= Qy3 / N;
+    }
     if( N_west != 0 ){
       Qx2_west = Qx2_west / N_west; 
       Qy2_west = Qy2_west / N_west;
@@ -349,16 +363,16 @@ void FemtoDstAnalyzerRecenter(const Char_t *inFile = "AuAu27GeV/AuAu27_ar.list",
     Qy3_recenter_east=Qy3_east- P_Qy3_east->GetBinContent(P_Qy3_east->FindBin(event->runId(), event->cent9()));
   }
 
-  Psi2_recenter=1.0/2.0*(TMath::ATan2(Qy2_recenter, Qx2_recenter)); //(TMath::Sqrt(event->refMult()))
+  Psi2_recenter=1.0/2.0*(TMath::ATan2(Qy2_recenter, Qx2_recenter)); 
   Psi3_recenter=1.0/3.0*(TMath::ATan2(Qy3_recenter, Qx3_recenter));
   //_west
   if( N_west != 0 ){
-    Psi2_recenter_west=1.0/2.0*(TMath::ATan2(Qy2_recenter_west, Qx2_recenter_west)); //(TMath::Sqrt(event->refMult()))
+    Psi2_recenter_west=1.0/2.0*(TMath::ATan2(Qy2_recenter_west, Qx2_recenter_west)); 
     Psi3_recenter_west=1.0/3.0*(TMath::ATan2(Qy3_recenter_west, Qx3_recenter_west));
   }
   //_east
   if( N_east != 0 ){
-    Psi2_recenter_east=1.0/2.0*(TMath::ATan2(Qy2_recenter_east, Qx2_recenter_east)); //(TMath::Sqrt(event->refMult()))
+    Psi2_recenter_east=1.0/2.0*(TMath::ATan2(Qy2_recenter_east, Qx2_recenter_east)); 
     Psi3_recenter_east=1.0/3.0*(TMath::ATan2(Qy3_recenter_east, Qx3_recenter_east));
   }
 
@@ -411,15 +425,19 @@ void FemtoDstAnalyzerRecenter(const Char_t *inFile = "AuAu27GeV/AuAu27_ar.list",
   P2_Qx3_cent_RunID->Fill(event->runId(), event->cent9(), Qx3, 1);
   P2_Qy3_cent_RunID->Fill(event->runId(), event->cent9(), Qy3, 1);
   //_west
-  P2_Qx2_cent_RunID_west->Fill(event->runId(), event->cent9(), Qx2_west, 1);
-  P2_Qy2_cent_RunID_west->Fill(event->runId(), event->cent9(), Qy2_west, 1);
-  P2_Qx3_cent_RunID_west->Fill(event->runId(), event->cent9(), Qx3_west, 1);
-  P2_Qy3_cent_RunID_west->Fill(event->runId(), event->cent9(), Qy3_west, 1);
+  if( N_west != 0 ){
+    P2_Qx2_cent_RunID_west->Fill(event->runId(), event->cent9(), Qx2_west, 1);
+    P2_Qy2_cent_RunID_west->Fill(event->runId(), event->cent9(), Qy2_west, 1);
+    P2_Qx3_cent_RunID_west->Fill(event->runId(), event->cent9(), Qx3_west, 1);
+    P2_Qy3_cent_RunID_west->Fill(event->runId(), event->cent9(), Qy3_west, 1);
+  }
   //_east
-  P2_Qx2_cent_RunID_east->Fill(event->runId(), event->cent9(), Qx2_east, 1);
-  P2_Qy2_cent_RunID_east->Fill(event->runId(), event->cent9(), Qy2_east, 1);
-  P2_Qx3_cent_RunID_east->Fill(event->runId(), event->cent9(), Qx3_east, 1);
-  P2_Qy3_cent_RunID_east->Fill(event->runId(), event->cent9(), Qy3_east, 1);
+  if( N_east != 0 ){
+    P2_Qx2_cent_RunID_east->Fill(event->runId(), event->cent9(), Qx2_east, 1);
+    P2_Qy2_cent_RunID_east->Fill(event->runId(), event->cent9(), Qy2_east, 1);
+    P2_Qx3_cent_RunID_east->Fill(event->runId(), event->cent9(), Qx3_east, 1);
+    P2_Qy3_cent_RunID_east->Fill(event->runId(), event->cent9(), Qy3_east, 1);
+  }
   
 
   H_Qx2_recenter->Fill(Qx2_recenter);
@@ -431,23 +449,27 @@ void FemtoDstAnalyzerRecenter(const Char_t *inFile = "AuAu27GeV/AuAu27_ar.list",
   H_Psi2_recenter->Fill(Psi2_recenter);
   H_Psi3_recenter->Fill(Psi3_recenter);
   //_west
-  H_Qx2_recenter_west->Fill(Qx2_recenter_west);
-  H_Qy2_recenter_west->Fill(Qy2_recenter_west);
-  H_Qx3_recenter_west->Fill(Qx3_recenter_west);
-  H_Qy3_recenter_west->Fill(Qy3_recenter_west);
-  H_Psi2_west->Fill(Psi2_west);
-  H_Psi3_west->Fill(Psi3_west);
-  H_Psi2_recenter_west->Fill(Psi2_recenter_west);
-  H_Psi3_recenter_west->Fill(Psi3_recenter_west);
+  if( N_west != 0 ){
+    H_Qx2_recenter_west->Fill(Qx2_recenter_west);
+    H_Qy2_recenter_west->Fill(Qy2_recenter_west);
+    H_Qx3_recenter_west->Fill(Qx3_recenter_west);
+    H_Qy3_recenter_west->Fill(Qy3_recenter_west);
+    H_Psi2_west->Fill(Psi2_west);
+    H_Psi3_west->Fill(Psi3_west);
+    H_Psi2_recenter_west->Fill(Psi2_recenter_west);
+    H_Psi3_recenter_west->Fill(Psi3_recenter_west);
+  }
   //_east
-  H_Qx2_recenter_east->Fill(Qx2_recenter_east);
-  H_Qy2_recenter_east->Fill(Qy2_recenter_east);
-  H_Qx3_recenter_east->Fill(Qx3_recenter_east);
-  H_Qy3_recenter_east->Fill(Qy3_recenter_east);
-  H_Psi2_east->Fill(Psi2_east);
-  H_Psi3_east->Fill(Psi3_east);
-  H_Psi2_recenter_east->Fill(Psi2_recenter_east);
-  H_Psi3_recenter_east->Fill(Psi3_recenter_east);
+  if( N_east != 0 ){
+    H_Qx2_recenter_east->Fill(Qx2_recenter_east);
+    H_Qy2_recenter_east->Fill(Qy2_recenter_east);
+    H_Qx3_recenter_east->Fill(Qx3_recenter_east);
+    H_Qy3_recenter_east->Fill(Qy3_recenter_east);
+    H_Psi2_east->Fill(Psi2_east);
+    H_Psi3_east->Fill(Psi3_east);
+    H_Psi2_recenter_east->Fill(Psi2_recenter_east);
+    H_Psi3_recenter_east->Fill(Psi3_recenter_east);
+  }
 
   P_square_resolution2->Fill(event->cent9(), TMath::Cos(2*( Psi2_recenter_west - Psi2_recenter_east )) );
   P_square_resolution3->Fill(event->cent9(), TMath::Cos(3*( Psi3_recenter_west - Psi3_recenter_east )) );

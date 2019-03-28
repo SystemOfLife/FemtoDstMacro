@@ -115,34 +115,34 @@ void FemtoDstAnalyzer(const Char_t *inFile = "AuAu27GeV/AuAu27_ar.list", const C
   TH2D *H_nSigP_QP = new TH2D ("H_nSigP_QP", "n#sigma Proton vs Q*P; Q*P,[GeV/c]; n#sigma Proton,[a.u.]", 500,-2.5,2.5,   500,-8,8);
 
   //TProfiles
-  TProfile *P_Q2_cent = new TProfile("P_Q2_cent","Centrality vs Q_{2}",50,-0.5,10,  -100,100 );
-  TProfile *P_Qx2_cent = new TProfile("P_Qx2_cent","Centrality vs Q_{2}_{x}",250,-0.5,10,  -100,100 );
-  TProfile *P_Qy2_cent = new TProfile("P_Qy2_cent","Centrality vs Q_{2}_{y}",250,-0.5,10,  -100,100 );
-  TProfile *P_Q3_cent = new TProfile("P_Q3_cent","Centrality vs Q_{3}",50,-0.5,10,  -100,100 );
-  TProfile *P_Qx3_cent = new TProfile("P_Qx3_cent","Centrality vs Q_{3}_{x}",250,-0.5,10,  -100,100 );
-  TProfile *P_Qy3_cent = new TProfile("P_Qy3_cent","Centrality vs Q_{3}_{y}",250,-0.5,10,  -100,100 );
+  // TProfile *P_Q2_cent = new TProfile("P_Q2_cent","Centrality vs Q_{2}",50,-0.5,10,  -100,100 );
+  // TProfile *P_Qx2_cent = new TProfile("P_Qx2_cent","Centrality vs Q_{2}_{x}",250,-0.5,10,  -100,100 );
+  // TProfile *P_Qy2_cent = new TProfile("P_Qy2_cent","Centrality vs Q_{2}_{y}",250,-0.5,10,  -100,100 );
+  // TProfile *P_Q3_cent = new TProfile("P_Q3_cent","Centrality vs Q_{3}",50,-0.5,10,  -100,100 );
+  // TProfile *P_Qx3_cent = new TProfile("P_Qx3_cent","Centrality vs Q_{3}_{x}",250,-0.5,10,  -100,100 );
+  // TProfile *P_Qy3_cent = new TProfile("P_Qy3_cent","Centrality vs Q_{3}_{y}",250,-0.5,10,  -100,100 );
   TProfile2D *P_Qx2_cent_RunID = new TProfile2D("P_Qx2_cent_RunID","Profile of Q_{2}_{x} on Centrality vs RunID",0.01e6, 12170000.0-0.0005, 12180000.0+0.0005, 9, -0.5, 8.5 );
   TProfile2D *P_Qy2_cent_RunID = new TProfile2D("P_Qy2_cent_RunID","Profile of Q_{2}_{y} on Centrality vs RunID",0.01e6, 12170000.0-0.0005, 12180000.0+0.0005, 9, -0.5, 8.5 );
   TProfile2D *P_Qx3_cent_RunID = new TProfile2D("P_Qx3_cent_RunID","Profile of Q_{3}_{x} on Centrality vs RunID",0.01e6, 12170000.0-0.0005, 12180000.0+0.0005, 9, -0.5, 8.5 );
   TProfile2D *P_Qy3_cent_RunID = new TProfile2D("P_Qy3_cent_RunID","Profile of Q_{3}_{y} on Centrality vs RunID",0.01e6, 12170000.0-0.0005, 12180000.0+0.0005, 9, -0.5, 8.5 );
   //-----west
-  TProfile *P_Q2_cent_west = new TProfile("P_Q2_cent_west","Centrality vs Q_{2}",50,-0.5,10,  -100,100 );
-  TProfile *P_Qx2_cent_west = new TProfile("P_Qx2_cent_west","Centrality vs Q_{2}_{x}",250,-0.5,10,  -100,100 );
-  TProfile *P_Qy2_cent_west = new TProfile("P_Qy2_cent_west","Centrality vs Q_{2}_{y}",250,-0.5,10,  -100,100 );
-  TProfile *P_Q3_cent_west = new TProfile("P_Q3_cent_west","Centrality vs Q_{3}",50,-0.5,10,  -100,100 );
-  TProfile *P_Qx3_cent_west = new TProfile("P_Qx3_cent_west","Centrality vs Q_{3}_{x}",250,-0.5,10,  -100,100 );
-  TProfile *P_Qy3_cent_west = new TProfile("P_Qy3_cent_west","Centrality vs Q_{3}_{y}",250,-0.5,10,  -100,100 );
+  // TProfile *P_Q2_cent_west = new TProfile("P_Q2_cent_west","Centrality vs Q_{2}",50,-0.5,10,  -100,100 );
+  // TProfile *P_Qx2_cent_west = new TProfile("P_Qx2_cent_west","Centrality vs Q_{2}_{x}",250,-0.5,10,  -100,100 );
+  // TProfile *P_Qy2_cent_west = new TProfile("P_Qy2_cent_west","Centrality vs Q_{2}_{y}",250,-0.5,10,  -100,100 );
+  // TProfile *P_Q3_cent_west = new TProfile("P_Q3_cent_west","Centrality vs Q_{3}",50,-0.5,10,  -100,100 );
+  // TProfile *P_Qx3_cent_west = new TProfile("P_Qx3_cent_west","Centrality vs Q_{3}_{x}",250,-0.5,10,  -100,100 );
+  // TProfile *P_Qy3_cent_west = new TProfile("P_Qy3_cent_west","Centrality vs Q_{3}_{y}",250,-0.5,10,  -100,100 );
   TProfile2D *P_Qx2_cent_RunID_west = new TProfile2D("P_Qx2_cent_RunID_west","Profile of Q_{2}_{x} on Centrality vs RunID",0.01e6, 12170000.0-0.0005, 12180000.0+0.0005, 9, -0.5, 8.5 );
   TProfile2D *P_Qy2_cent_RunID_west = new TProfile2D("P_Qy2_cent_RunID_west","Profile of Q_{2}_{y} on Centrality vs RunID",0.01e6, 12170000.0-0.0005, 12180000.0+0.0005, 9, -0.5, 8.5 );
   TProfile2D *P_Qx3_cent_RunID_west = new TProfile2D("P_Qx3_cent_RunID_west","Profile of Q_{3}_{x} on Centrality vs RunID",0.01e6, 12170000.0-0.0005, 12180000.0+0.0005, 9, -0.5, 8.5 );
   TProfile2D *P_Qy3_cent_RunID_west = new TProfile2D("P_Qy3_cent_RunID_west","Profile of Q_{3}_{y} on Centrality vs RunID",0.01e6, 12170000.0-0.0005, 12180000.0+0.0005, 9, -0.5, 8.5 );
   //-----east
-  TProfile *P_Q2_cent_east= new TProfile("P_Q2_cent_east","Centrality vs Q_{2}",50,-0.5,10,  -100,100 );
-  TProfile *P_Qx2_cent_east = new TProfile("P_Qx2_cent_east","Centrality vs Q_{2}_{x}",250,-0.5,10,  -100,100 );
-  TProfile *P_Qy2_cent_east = new TProfile("P_Qy2_cent_east","Centrality vs Q_{2}_{y}",250,-0.5,10,  -100,100 );
-  TProfile *P_Q3_cent_east= new TProfile("P_Q3_cent_east","Centrality vs Q_{3}",50,-0.5,10,  -100,100 );
-  TProfile *P_Qx3_cent_east = new TProfile("P_Qx3_cent_east","Centrality vs Q_{3}_{x}",250,-0.5,10,  -100,100 );
-  TProfile *P_Qy3_cent_east = new TProfile("P_Qy3_cent_east","Centrality vs Q_{3}_{y}",250,-0.5,10,  -100,100 );
+  // TProfile *P_Q2_cent_east= new TProfile("P_Q2_cent_east","Centrality vs Q_{2}",50,-0.5,10,  -100,100 );
+  // TProfile *P_Qx2_cent_east = new TProfile("P_Qx2_cent_east","Centrality vs Q_{2}_{x}",250,-0.5,10,  -100,100 );
+  // TProfile *P_Qy2_cent_east = new TProfile("P_Qy2_cent_east","Centrality vs Q_{2}_{y}",250,-0.5,10,  -100,100 );
+  // TProfile *P_Q3_cent_east= new TProfile("P_Q3_cent_east","Centrality vs Q_{3}",50,-0.5,10,  -100,100 );
+  // TProfile *P_Qx3_cent_east = new TProfile("P_Qx3_cent_east","Centrality vs Q_{3}_{x}",250,-0.5,10,  -100,100 );
+  // TProfile *P_Qy3_cent_east = new TProfile("P_Qy3_cent_east","Centrality vs Q_{3}_{y}",250,-0.5,10,  -100,100 );
   TProfile2D *P_Qx2_cent_RunID_east = new TProfile2D("P_Qx2_cent_RunID_east","Profile of Q_{2}_{x} on Centrality vs RunID",0.01e6, 12170000.0-0.0005, 12180000.0+0.0005, 9, -0.5, 8.5 );
   TProfile2D *P_Qy2_cent_RunID_east = new TProfile2D("P_Qy2_cent_RunID_east","Profile of Q_{2}_{y} on Centrality vs RunID",0.01e6, 12170000.0-0.0005, 12180000.0+0.0005, 9, -0.5, 8.5 );
   TProfile2D *P_Qx3_cent_RunID_east = new TProfile2D("P_Qx3_cent_RunID_east","Profile of Q_{3}_{x} on Centrality vs RunID",0.01e6, 12170000.0-0.0005, 12180000.0+0.0005, 9, -0.5, 8.5 );
@@ -153,7 +153,7 @@ void FemtoDstAnalyzer(const Char_t *inFile = "AuAu27GeV/AuAu27_ar.list", const C
   Double_t Q3=0,Qx3=0,Qy3=0,Psi3=0;
   Double_t Q2_west=0, Qx2_west=0, Qy2_west=0, Psi2_west=0, Q3_west=0, Qx3_west=0, Qy3_west=0, Psi3_west=0;
   Double_t Q2_east=0, Qx2_east=0, Qy2_east=0, Psi2_east=0, Q3_east=0, Qx3_east=0, Qy3_east=0, Psi3_east=0;
-  Double_t N_east=0, N_west=0;
+  Double_t N_east=0, N_west=0, N=0;
 
 
   StFemtoDstReader* femtoReader = new StFemtoDstReader(inFile);
@@ -184,8 +184,10 @@ void FemtoDstAnalyzer(const Char_t *inFile = "AuAu27GeV/AuAu27_ar.list", const C
 
     //comment section below
     //
-    // std::cout << "Working on event #[" << (iEvent+1)
-    //   	      << "/" << events2read << "]" << std::endl;
+        if ((iEvent+1) % 10000 == 0){
+      std::cout << "Working on event #[" << (iEvent + 1)
+                << "/" << events2read << "]" << std::endl;
+    }
 
     Bool_t readEvent = femtoReader->readFemtoEvent(iEvent);
     if( !readEvent ) {
@@ -209,7 +211,7 @@ void FemtoDstAnalyzer(const Char_t *inFile = "AuAu27GeV/AuAu27_ar.list", const C
     
 
     // Reject vertices that are far from the central membrane along the beam
-    if( TMath::Abs( pVtx.Z() ) > 70. ) continue;
+    if( TMath::Abs( pVtx.Z() ) > 40. ) continue;
     if( TMath::Abs( pow(pVtx.X(), 2)+ pow(pVtx.Y(), 2)) > 2. ) continue;
     //if (event->vpdVz() == 0.0) continue;
 
@@ -224,9 +226,12 @@ void FemtoDstAnalyzer(const Char_t *inFile = "AuAu27GeV/AuAu27_ar.list", const C
 
     //Q-vector cleaning in new event
     Q2=0; Qx2=0; Qy2=0; Psi2=0; Q3=0; Qx3=0; Qy3=0; Psi3=0;
+    
     Q2_west=0; Qx2_west=0; Qy2_west=0; Psi2_west=0; Q3_west=0; Qx3_west=0; Qy3_west=0; Psi3_west=0;
+    
     Q2_east=0; Qx2_east=0; Qy2_east=0; Psi2_east=0; Q3_east=0; Qx3_east=0; Qy3_east=0; Psi3_east=0;
-    N_east= 0; N_west=0;
+    
+    N_east= 0; N_west=0; N=0;
 
 
 
@@ -250,15 +255,20 @@ void FemtoDstAnalyzer(const Char_t *inFile = "AuAu27GeV/AuAu27_ar.list", const C
 
       // Simple single-track cut
       if( femtoTrack->gMom().Mag() < 0.1 || femtoTrack->gDCA(pVtx).Mag() > 2. ) {
-        continue;
+         continue;
       }
-      if( femtoTrack -> p() < 0.15 || femtoTrack -> p() > 5 || 
-      TMath::Abs( femtoTrack -> eta() ) > 1 || femtoTrack -> nHits() < 15 ) { /**/ //15 из 45 падов сработали, при eta>1 эффективность сильно падает
-        continue;
+      /*//Для индитификации частиц
+      if( TMath::Abs( femtoTrack -> eta() ) > 1.0 || femtoTrack -> nHits() < 15 || 
+          femtoTrack -> p() < 0.15 || femtoTrack -> p() > 5.0) {
+         continue;
       }
-
-      if(femtoTrack->pt()>2.0 || femtoTrack->pt()<0.2){ 
-        continue;
+      */
+      // для заряженных адронов
+      if( TMath::Abs( femtoTrack -> eta() ) > 1.0 ||
+          femtoTrack -> nHits() < 15 ||
+          femtoTrack -> pt() < 0.2 || 
+          femtoTrack -> pt() > 2.0 ) {
+         continue;
       }
       
       omega=femtoTrack->pt();
@@ -267,6 +277,7 @@ void FemtoDstAnalyzer(const Char_t *inFile = "AuAu27GeV/AuAu27_ar.list", const C
       Qy2+= omega*sin(2*(femtoTrack->phi()) );
       Qx3+= omega*cos(3*(femtoTrack->phi()) );
       Qy3+= omega*sin(3*(femtoTrack->phi()) );
+      N++;
       if(femtoTrack->eta()>0.05){
         Qx2_east+= omega*cos(2*(femtoTrack->phi()) );
         Qy2_east+= omega*sin(2*(femtoTrack->phi()) );
@@ -282,19 +293,6 @@ void FemtoDstAnalyzer(const Char_t *inFile = "AuAu27GeV/AuAu27_ar.list", const C
         Qy3_west+= omega*sin(3*(femtoTrack->phi()) );
         N_west++;
       }
-
-      if( N_west != 0 ){
-      Qx2_west = Qx2_west / N_west; 
-      Qy2_west = Qy2_west / N_west;
-      Qx3_west = Qx3_west / N_west;
-      Qy3_west = Qy3_west / N_west;
-    }
-    if( N_east != 0 ){
-      Qx2_east = Qx2_east / N_east; 
-      Qy2_east = Qy2_east / N_east;
-      Qx3_east = Qx3_east / N_east;
-      Qy3_east = Qy3_east / N_east;
-    }
 
       //Track histograms
       H_dEdx->Fill(femtoTrack->dEdx());
@@ -323,51 +321,72 @@ void FemtoDstAnalyzer(const Char_t *inFile = "AuAu27GeV/AuAu27_ar.list", const C
     } //for(Int_t iTrk=0; iTrk<nTracks; iTrk++)
 
 
-    //Finding Q2,Q3,Psi2,Psi3
+    if( N != 0){
+        Qx2= Qx2 / N;
+        Qy2= Qy2 / N;
+        Qx3= Qx3 / N;
+        Qy3= Qy3 / N;
+      }
+      if( N_west != 0 ){
+        Qx2_west = Qx2_west / N_west; 
+        Qy2_west = Qy2_west / N_west;
+        Qx3_west = Qx3_west / N_west;
+        Qy3_west = Qy3_west / N_west;
+      }
+      if( N_east != 0 ){
+        Qx2_east = Qx2_east / N_east; 
+        Qy2_east = Qy2_east / N_east;
+        Qx3_east = Qx3_east / N_east;
+        Qy3_east = Qy3_east / N_east;
+      }
+
+
     Psi2=1.0/2.0*(TMath::ATan2(Qy2, Qx2)); //(TMath::Sqrt(event->refMult()))
-    Psi3=1.0/3.0*(TMath::ATan2(Qy3, Qx3)); 
-    Q2=TMath::Sqrt(pow(Qx2,2)+pow(Qy2,2));
-    Q3=TMath::Sqrt(pow(Qx3,2)+pow(Qy3,2));
-    //------west arm Q
+  Psi3=1.0/3.0*(TMath::ATan2(Qy3, Qx3));
+  //------west arm Q
+  if( N_west != 0 ){
     Psi2_west=1.0/2.0*(TMath::ATan2(Qy2_west, Qx2_west)); //(TMath::Sqrt(event->refMult()))
     Psi3_west=1.0/3.0*(TMath::ATan2(Qy3_west, Qx3_west)); 
     Q2_west=TMath::Sqrt(pow(Qx2_west,2)+pow(Qy2_west,2));
     Q3_west=TMath::Sqrt(pow(Qx3_west,2)+pow(Qy3_west,2));
+  }
     //-----east Q
+  if( N_east != 0 ){
     Psi2_east=1.0/2.0*(TMath::ATan2(Qy2_east, Qx2_east)); //(TMath::Sqrt(event->refMult()))
     Psi3_east=1.0/3.0*(TMath::ATan2(Qy3_east, Qx3_east)); 
     Q2_east=TMath::Sqrt(pow(Qx2_east,2)+pow(Qy2_east,2));
     Q3_east=TMath::Sqrt(pow(Qx3_east,2)+pow(Qy3_east,2));
+  }
 
     //Fillig Profiles
-    P_Q2_cent->Fill(event->cent9(), Q2);
-    P_Qx2_cent->Fill(event->cent9(), Qx2);
-    P_Qy2_cent->Fill(event->cent9(), Qy2);
-    P_Q3_cent->Fill(event->cent9(), Q3);
-    P_Qx3_cent->Fill(event->cent9(), Qx3);
-    P_Qy3_cent->Fill(event->cent9(), Qy3);
+    // P_Q2_cent->Fill(event->cent9(), Q2);
+    // P_Qx2_cent->Fill(event->cent9(), Qx2);
+    // P_Qy2_cent->Fill(event->cent9(), Qy2);
+    // P_Q3_cent->Fill(event->cent9(), Q3);
+    // P_Qx3_cent->Fill(event->cent9(), Qx3);
+    // P_Qy3_cent->Fill(event->cent9(), Qy3);
     P_Qx2_cent_RunID->Fill(event->runId(), event->cent9(), Qx2, 1);
     P_Qy2_cent_RunID->Fill(event->runId(), event->cent9(), Qy2, 1);
     P_Qx3_cent_RunID->Fill(event->runId(), event->cent9(), Qx3, 1);
     P_Qy3_cent_RunID->Fill(event->runId(), event->cent9(), Qy3, 1);
     //----west
-    P_Q2_cent_west->Fill(event->cent9(), Q2_west);
-    P_Qx2_cent_west->Fill(event->cent9(), Qx2_west);
-    P_Qy2_cent_west->Fill(event->cent9(), Qy2_west);
-    P_Q3_cent_west->Fill(event->cent9(), Q3_west);
-    P_Qx3_cent_west->Fill(event->cent9(), Qx3_west);
-    P_Qy3_cent_west->Fill(event->cent9(), Qy3_west);
+    // P_Q2_cent_west->Fill(event->cent9(), Q2_west);
+    // P_Qx2_cent_west->Fill(event->cent9(), Qx2_west);
+    // P_Qy2_cent_west->Fill(event->cent9(), Qy2_west);
+    // P_Q3_cent_west->Fill(event->cent9(), Q3_west);
+    // P_Qx3_cent_west->Fill(event->cent9(), Qx3_west);
+    // P_Qy3_cent_west->Fill(event->cent9(), Qy3_west);
     P_Qx2_cent_RunID_west->Fill(event->runId(), event->cent9(), Qx2_west, 1);
     P_Qy2_cent_RunID_west->Fill(event->runId(), event->cent9(), Qy2_west, 1);
     P_Qx3_cent_RunID_west->Fill(event->runId(), event->cent9(), Qx3_west, 1);
     P_Qy3_cent_RunID_west->Fill(event->runId(), event->cent9(), Qy3_west, 1);
     //----east
-    P_Q2_cent_east->Fill(event->cent9(), Q2_east);
-    P_Qx2_cent_east->Fill(event->cent9(), Qx2_east);
-    P_Qy2_cent_east->Fill(event->cent9(), Qy2_east);
-    P_Q3_cent_east->Fill(event->cent9(), Q3_east);
-    P_Qx3_cent_east->Fill(event->cent9(), Qx3_east);
-    P_Qy3_cent_east->Fill(event->cent9(), Qy3_east);
+    // P_Q2_cent_east->Fill(event->cent9(), Q2_east);
+    // P_Qx2_cent_east->Fill(event->cent9(), Qx2_east);
+    // P_Qy2_cent_east->Fill(event->cent9(), Qy2_east);
+    // P_Q3_cent_east->Fill(event->cent9(), Q3_east);
+    // P_Qx3_cent_east->Fill(event->cent9(), Qx3_east);
+    // P_Qy3_cent_east->Fill(event->cent9(), Qy3_east);
     P_Qx2_cent_RunID_east->Fill(event->runId(), event->cent9(), Qx2_east, 1);
     P_Qy2_cent_RunID_east->Fill(event->runId(), event->cent9(), Qy2_east, 1);
     P_Qx3_cent_RunID_east->Fill(event->runId(), event->cent9(), Qx3_east, 1);
@@ -428,12 +447,6 @@ void FemtoDstAnalyzer(const Char_t *inFile = "AuAu27GeV/AuAu27_ar.list", const C
   H_Qy3->Write();
   H_Psi3->Write();
   H_Psi2->Write();
-  P_Q2_cent->Write();
-  P_Qx2_cent->Write();
-  P_Qy2_cent->Write();
-  P_Q3_cent->Write();
-  P_Qx3_cent->Write();
-  P_Qy3_cent->Write();
   P_Qx2_cent_RunID->Write();
   P_Qy2_cent_RunID->Write();
   P_Qx3_cent_RunID->Write();
@@ -441,12 +454,6 @@ void FemtoDstAnalyzer(const Char_t *inFile = "AuAu27GeV/AuAu27_ar.list", const C
   //----west
   H_Psi3_west->Write();
   H_Psi2_west->Write();
-  P_Q2_cent_west->Write();
-  P_Qx2_cent_west->Write();
-  P_Qy2_cent_west->Write();
-  P_Q3_cent_west->Write();
-  P_Qx3_cent_west->Write();
-  P_Qy3_cent_west->Write();
   P_Qx2_cent_RunID_west->Write();
   P_Qy2_cent_RunID_west->Write();
   P_Qx3_cent_RunID_west->Write();
@@ -454,12 +461,6 @@ void FemtoDstAnalyzer(const Char_t *inFile = "AuAu27GeV/AuAu27_ar.list", const C
   //----east
   H_Psi3_east->Write();
   H_Psi2_east->Write();
-  P_Q2_cent_east->Write();
-  P_Qx2_cent_east->Write();
-  P_Qy2_cent_east->Write();
-  P_Q3_cent_east->Write();
-  P_Qx3_cent_east->Write();
-  P_Qy3_cent_east->Write();
   P_Qx2_cent_RunID_east->Write();
   P_Qy2_cent_RunID_east->Write();
   P_Qx3_cent_RunID_east->Write();

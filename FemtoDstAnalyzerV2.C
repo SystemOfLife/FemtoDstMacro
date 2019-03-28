@@ -69,10 +69,20 @@ void FemtoDstAnalyzerV2(const Char_t *inFile = "AuAu27GeV/AuAu27_ar.list", const
   TH1D *H_Psi3_flat_east = new TH1D("H_Psi3_flat_east","#psi^{rec+flat}_{3} of Event plane of 3 harmonic; #psi,[rad]; N_{count}",500,-TMath::Pi()/3.0-1, TMath::Pi()/3.0+1 );
 
   //Profiles for v2 and v3
-  TProfile2D *P_v2_pt = new TProfile2D("P_v2_pt","Profile of p_{t} versus v_{2})", 50, 0.2, 5.2, 9, -0.5, 8.5);
+  TProfile2D *P_v2_pt = new TProfile2D("P_v2_pt","Profile of p_{t} versus v_{2}", 50, 0.2, 5.2, 9, -0.5, 8.5);
   TProfile2D *P_v3_pt = new TProfile2D("P_v3_pt","Profile of p_{t} versus v_{3}", 50, 0.2, 5.2, 9, -0.5, 8.5);
   TProfile *P_v2_cent = new TProfile("P_v2_cent","Profile of Centrality versus v_{2}", 9, -0.5, 8.5);
   TProfile *P_v3_cent = new TProfile("P_v3_cent","Profile of Centrality versus v_{3}", 9, -0.5, 8.5);
+  //east
+  TProfile2D *P_v2_pt_east = new TProfile2D("P_v2_pt_east","Profile of p_{t} versus v_{2}", 50, 0.2, 5.2, 9, -0.5, 8.5);
+  TProfile2D *P_v3_pt_east = new TProfile2D("P_v3_pt_east","Profile of p_{t} versus v_{3}", 50, 0.2, 5.2, 9, -0.5, 8.5);
+  TProfile *P_v2_cent_east = new TProfile("P_v2_cent_east","Profile of Centrality versus v_{2}", 9, -0.5, 8.5);
+  TProfile *P_v3_cent_east = new TProfile("P_v3_cent_east","Profile of Centrality versus v_{3}", 9, -0.5, 8.5);
+  //west
+  TProfile2D *P_v2_pt_west = new TProfile2D("P_v2_pt_west","Profile of p_{t} versus v_{2}", 50, 0.2, 5.2, 9, -0.5, 8.5);
+  TProfile2D *P_v3_pt_west = new TProfile2D("P_v3_pt_west","Profile of p_{t} versus v_{3}", 50, 0.2, 5.2, 9, -0.5, 8.5);
+  TProfile *P_v2_cent_west = new TProfile("P_v2_cent_west","Profile of Centrality versus v_{2}", 9, -0.5, 8.5);
+  TProfile *P_v3_cent_west = new TProfile("P_v3_cent_west","Profile of Centrality versus v_{3}", 9, -0.5, 8.5);
 
   //----------READING FLATENING-------------------------
   TFile *readf = new TFile(flatFileName,"READ");
@@ -161,18 +171,20 @@ void FemtoDstAnalyzerV2(const Char_t *inFile = "AuAu27GeV/AuAu27_ar.list", const
 
   std::cout << "Number of events to read: " << events2read << std::endl;
 
+  Double_t R2_cos = 0, R3_cos = 0, v2 = 0, v3 = 0, weight = 0;;
   Double_t omega=0, Qx2=0, Qy2=0, Qx2_recenter=0, Qy2_recenter=0, Psi2=0, Psi2_recenter=0, delta_Psi2=0, Psi2_flat=0;
   Double_t Qx3=0, Qy3=0, Qx3_recenter=0, Qy3_recenter=0, Psi3=0, Psi3_recenter=0, delta_Psi3=0, Psi3_flat=0;
   Double_t Q2_west=0, Qx2_west=0, Qy2_west=0, Psi2_west=0, Q3_west=0, Qx3_west=0, Qy3_west=0, Psi3_west=0, Qx2_recenter_west=0, Qy2_recenter_west=0, Qx3_recenter_west=0, Qy3_recenter_west=0, Psi2_recenter_west=0, Psi3_recenter_west=0, Psi2_flat_west=0, Psi3_flat_west=0, delta_Psi2_west=0, delta_Psi3_west=0;
   Double_t Q2_east=0, Qx2_east=0, Qy2_east=0, Psi2_east=0, Q3_east=0, Qx3_east=0, Qy3_east=0, Psi3_east=0, Qx2_recenter_east=0, Qy2_recenter_east=0, Qx3_recenter_east=0, Qy3_recenter_east=0, Psi3_recenter_east=0, Psi2_recenter_east=0, Psi2_flat_east=0, Psi3_flat_east=0, delta_Psi2_east=0, delta_Psi3_east=0;
-  Double_t N_west=0, N_east=0;
-  Double_t R2_cos = 0, R3_cos = 0, v2 = 0, v3 = 0, weight = 0;;
+  Double_t N_west=0, N_east=0, N=0;
 
   // Loop over events
   for(Long64_t iEvent=0; iEvent<events2read; iEvent++) {
 
-    //std::cout << "Working on event #[" << (iEvent+1)
-    //  	      << "/" << events2read << "]" << std::endl;
+        if ((iEvent+1) % 10000 == 0){
+      std::cout << "Working on event #[" << (iEvent + 1)
+                << "/" << events2read << "]" << std::endl;
+    }
 
     Bool_t readEvent = femtoReader->readFemtoEvent(iEvent);
     if( !readEvent ) {
@@ -194,7 +206,7 @@ void FemtoDstAnalyzerV2(const Char_t *inFile = "AuAu27GeV/AuAu27_ar.list", const
     TVector3 pVtx = event->primaryVertex();
 
     // Reject vertices that are far from the central membrane along the beam
-    if( TMath::Abs( pVtx.Z() ) > 70. ) continue;
+    if( TMath::Abs( pVtx.Z() ) > 40. ) continue;
     if( TMath::Abs( pow(pVtx.X(), 2)+ pow(pVtx.Y(), 2)) > 2. ) continue;
     //if (event->vpdVz() == 0.0) continue;
 
@@ -203,15 +215,17 @@ void FemtoDstAnalyzerV2(const Char_t *inFile = "AuAu27GeV/AuAu27_ar.list", const
 
     N_west = 0;
     N_east = 0;
-    v2 = 0;
-    v3 = 0;
+    N=0;
 
     //Q-vector cleaning in new event
-    Qx2=0; Qy2=0; Qx2_recenter=0; Qy2_recenter=0; Psi2=0; Psi2_recenter=0; Psi2_flat=0; delta_Psi2=0;
-    Qx3=0; Qy3=0; Qx3_recenter=0; Qy3_recenter=0; Psi3=0; Psi3_recenter=0; Psi3_flat=0; delta_Psi3=0;
+    omega=0;
+    Qx2=0; Qy2=0; Qx2_recenter=0; Qy2_recenter=0; Psi2=0; Psi2_recenter=0; delta_Psi2=0; Psi2_flat=0;
+    Qx3=0; Qy3=0; Qx3_recenter=0; Qy3_recenter=0; Psi3=0; Psi3_recenter=0; delta_Psi3=0; Psi3_flat=0;
+    Q2_west=0; Qx2_west=0; Qy2_west=0; Psi2_west=0; Q3_west=0; Qx3_west=0; Qy3_west=0; Psi3_west=0; Qx2_recenter_west=0; Qy2_recenter_west=0; Qx3_recenter_west=0; Qy3_recenter_west=0; Psi2_recenter_west=0; Psi3_recenter_west=0; Psi2_flat_west=0; Psi3_flat_west=0; delta_Psi2_west=0; delta_Psi3_west=0;
+    Q2_east=0; Qx2_east=0; Qy2_east=0; Psi2_east=0; Q3_east=0; Qx3_east=0; Qy3_east=0; Psi3_east=0; Qx2_recenter_east=0; Qy2_recenter_east=0; Qx3_recenter_east=0; Qy3_recenter_east=0; Psi3_recenter_east=0; Psi2_recenter_east=0; Psi2_flat_east=0; Psi3_flat_east=0; delta_Psi2_east=0; delta_Psi3_east=0;
+    v2=0; v3=0;
 
-    Qx2_west=0; Qy2_west=0; Qx2_recenter_west=0; Qy2_recenter_west=0; Psi2_west=0; Psi2_recenter_west=0; Psi2_flat_west=0; delta_Psi2_west=0;
-    Qx3_east=0; Qy3_east=0; Qx3_recenter_east=0; Qy3_recenter_east=0; Psi3_east=0; Psi3_recenter_east=0; Psi3_flat_east=0; delta_Psi3_east=0;
+
 
     // Track loop
     for(Int_t iTrk=0; iTrk<nTracks; iTrk++) {
@@ -226,18 +240,24 @@ void FemtoDstAnalyzerV2(const Char_t *inFile = "AuAu27GeV/AuAu27_ar.list", const
       if( (femtoTrack->dEdx()) == 0 ) continue;
       // Simple single-track cut
       if( femtoTrack->gMom().Mag() < 0.1 || femtoTrack->gDCA(pVtx).Mag() > 2. ) {
-        continue;
+         continue;
       }
-      if( femtoTrack -> p() < 0.15 || femtoTrack -> p() > 5 || 
-      TMath::Abs( femtoTrack -> eta() ) > 1 || femtoTrack -> nHits() < 15 ) { /**/ //15 из 45 падов сработали, при eta>1 эффективность сильно падает
-        continue;
+      /*//Для индитификации частиц
+      if( TMath::Abs( femtoTrack -> eta() ) > 1.0 || femtoTrack -> nHits() < 15 || 
+          femtoTrack -> p() < 0.15 || femtoTrack -> p() > 5.0) {
+         continue;
       }
-
-      if(femtoTrack->pt()>2.0 || femtoTrack->pt()<0.2){ 
-        continue;
+      */
+      // для заряженных адронов
+      if( TMath::Abs( femtoTrack -> eta() ) > 1.0 ||
+          femtoTrack -> nHits() < 15 ||
+          femtoTrack -> pt() < 0.2 || 
+          femtoTrack -> pt() > 2.0 ) {
+         continue;
       }
       
       omega=femtoTrack->pt();
+
       if(femtoTrack->eta()>0.05){
         Qx2_east+= omega*cos(2*(femtoTrack->phi()) );
         Qy2_east+= omega*sin(2*(femtoTrack->phi()) );
@@ -253,7 +273,6 @@ void FemtoDstAnalyzerV2(const Char_t *inFile = "AuAu27GeV/AuAu27_ar.list", const
         Qy3_west+= omega*sin(3*(femtoTrack->phi()) );
         N_west++;
       }
-
 
       // Check if track has TOF signal
       if ( femtoTrack->isTofTrack() ) {
@@ -283,7 +302,7 @@ void FemtoDstAnalyzerV2(const Char_t *inFile = "AuAu27GeV/AuAu27_ar.list", const
     Q2_west=TMath::Sqrt(pow(Qx2_west,2)+pow(Qy2_west,2));
     Q3_west=TMath::Sqrt(pow(Qx3_west,2)+pow(Qy3_west,2));
   }
-  //-----east Q
+    //-----east Q
   if( N_east != 0 ){
     Psi2_east=1.0/2.0*(TMath::ATan2(Qy2_east, Qx2_east)); //(TMath::Sqrt(event->refMult()))
     Psi3_east=1.0/3.0*(TMath::ATan2(Qy3_east, Qx3_east)); 
@@ -292,7 +311,7 @@ void FemtoDstAnalyzerV2(const Char_t *inFile = "AuAu27GeV/AuAu27_ar.list", const
   }
   //----_west
   if( N_west != 0 ){
-    Qx2_recenter_west=Qx2_west- P3_Qx2_west->GetBinContent(P3_Qx2_west->FindBin(event->runId(), event->cent9()));
+    Qx2_recenter_west=Qx2_west- P3_Qx2_west->GetBinContent(P3_Qx2_west->FindBin(event->runId(), event->cent9())); //--------BUUUUG
     Qy2_recenter_west=Qy2_west- P3_Qy2_west->GetBinContent(P3_Qy2_west->FindBin(event->runId(), event->cent9()));
     Qx3_recenter_west=Qx3_west- P3_Qx3_west->GetBinContent(P3_Qx3_west->FindBin(event->runId(), event->cent9()));
     Qy3_recenter_west=Qy3_west- P3_Qy3_west->GetBinContent(P3_Qy3_west->FindBin(event->runId(), event->cent9()));
@@ -306,14 +325,17 @@ void FemtoDstAnalyzerV2(const Char_t *inFile = "AuAu27GeV/AuAu27_ar.list", const
   }
   //_west
   if( N_west != 0 ){
-    Psi2_recenter_west=1.0/2.0*(TMath::ATan2(Qy2_recenter_west, Qx2_recenter_west)); //(TMath::Sqrt(event->refMult()))
-    Psi3_recenter_west=1.0/3.0*(TMath::ATan2(Qy3_recenter_west, Qx3_recenter_west));
+    Psi2_recenter_west=(1.0/2.0)*(TMath::ATan2(Qy2_recenter_west, Qx2_recenter_west)); //(TMath::Sqrt(event->refMult()))
+    Psi3_recenter_west=(1.0/3.0)*(TMath::ATan2(Qy3_recenter_west, Qx3_recenter_west));
   }
   //_east
   if( N_east != 0 ){
-    Psi2_recenter_east=1.0/2.0*(TMath::ATan2(Qy2_recenter_east, Qx2_recenter_east)); //(TMath::Sqrt(event->refMult()))
-    Psi3_recenter_east=1.0/3.0*(TMath::ATan2(Qy3_recenter_east, Qx3_recenter_east));
+    Psi2_recenter_east=(1.0/2.0)*(TMath::ATan2(Qy2_recenter_east, Qx2_recenter_east)); //(TMath::Sqrt(event->refMult()))
+    Psi3_recenter_east=(1.0/3.0)*(TMath::ATan2(Qy3_recenter_east, Qx3_recenter_east));
   }
+
+
+
   //WEST
   if( N_west != 0 ){
     for (int i=0; i<4; i++){
@@ -321,14 +343,14 @@ void FemtoDstAnalyzerV2(const Char_t *inFile = "AuAu27GeV/AuAu27_ar.list", const
         -p_sin_v2_west[i]->GetBinContent(p_sin_v2_west[i]->FindBin(event->runId(), event->cent9()))*TMath::Cos((i+1)*2*Psi2_recenter_west) );
       }
 
-      Psi2_flat_west = Psi2_recenter_west + 1.0/2.0*delta_Psi2_west;
+      Psi2_flat_west = Psi2_recenter_west + (1.0/2.0)*delta_Psi2_west;
 
     for (int i=0; i<4; i++){
       delta_Psi3_west += 2.0/( (Double_t)i+1.0)*(p_cos_v3_west[i]->GetBinContent(p_cos_v3_west[i]->FindBin(event->runId(), event->cent9()))*TMath::Sin((i+1)*3*Psi3_recenter_west)
       -p_sin_v3_west[i]->GetBinContent(p_sin_v3_west[i]->FindBin(event->runId(), event->cent9()))*TMath::Cos((i+1)*3*Psi3_recenter_west) );
     }
 
-      Psi3_flat_west = Psi3_recenter_west +1.0/3.0*delta_Psi3_west;
+      Psi3_flat_west = Psi3_recenter_west +(1.0/3.0)*delta_Psi3_west;
   }
 
   //EAST
@@ -338,75 +360,143 @@ void FemtoDstAnalyzerV2(const Char_t *inFile = "AuAu27GeV/AuAu27_ar.list", const
         -p_sin_v2_east[i]->GetBinContent(p_sin_v2_east[i]->FindBin(event->runId(), event->cent9()))*TMath::Cos((i+1)*2*Psi2_recenter_east) );
       }
 
-      Psi2_flat_east = Psi2_recenter_east + 1.0/2.0*delta_Psi2_east;
+      Psi2_flat_east = Psi2_recenter_east + (1.0/2.0)*delta_Psi2_east;
 
     for (int i=0; i<4; i++){
       delta_Psi3_east += 2.0/( (Double_t)i+1.0)*(p_cos_v3_east[i]->GetBinContent(p_cos_v3_east[i]->FindBin(event->runId(), event->cent9()))*TMath::Sin((i+1)*3*Psi3_recenter_east)
       -p_sin_v3_east[i]->GetBinContent(p_sin_v3_east[i]->FindBin(event->runId(), event->cent9()))*TMath::Cos((i+1)*3*Psi3_recenter_east) );
     }
 
-      Psi3_flat_east = Psi3_recenter_east + 1.0/3.0*delta_Psi3_east;
+      Psi3_flat_east = Psi3_recenter_east + (1.0/3.0)*delta_Psi3_east;
+  }
+
+
+  //filling Psi
+  //_west
+  if( N_west != 0 ){
+    H_Psi2_west->Fill(Psi2_west);
+    H_Psi3_west->Fill(Psi3_west);
+    H_Psi2_recenter_west->Fill(Psi2_recenter_west);
+    H_Psi3_recenter_west->Fill(Psi3_recenter_west);
+    H_Psi2_flat_west->Fill(Psi2_flat_west);
+    H_Psi3_flat_west->Fill(Psi3_flat_west);
+  }
+  //_east
+  if( N_east != 0 ){
+    H_Psi2_east->Fill(Psi2_east);
+    H_Psi3_east->Fill(Psi3_east);
+    H_Psi2_recenter_east->Fill(Psi2_recenter_east);
+    H_Psi3_recenter_east->Fill(Psi3_recenter_east);
+    H_Psi2_flat_east->Fill(Psi2_flat_east);
+    H_Psi3_flat_east->Fill(Psi3_flat_east);
   }
 
 
   // Track loop
     for(Int_t iTrk=0; iTrk<nTracks; iTrk++) {
-      StFemtoTrack *femtoTrack = dst->track(iTrk);
-      if (!femtoTrack) continue;
-      if ( !femtoTrack->isPrimary() ) continue;
-      if( (femtoTrack->dEdx()) == 0 ) continue;
-      if( femtoTrack->gMom().Mag() < 0.1 || femtoTrack->gDCA(pVtx).Mag() > 2. ) {
-        continue;
+      StFemtoTrack *femtoTrack2 = dst->track(iTrk);
+      if (!femtoTrack2) continue;
+      if ( !femtoTrack2->isPrimary() ) continue;
+      if( (femtoTrack2->dEdx()) == 0 ) continue;
+      if( femtoTrack2->gMom().Mag() < 0.1 || femtoTrack2->gDCA(pVtx).Mag() > 2. ) {
+         continue;
       }
-      if( femtoTrack -> p() < 0.15 || femtoTrack -> p() > 5 || TMath::Abs( femtoTrack -> eta() ) > 1 || femtoTrack -> nHits() < 15 ) {
-        continue;
+      /*//Для индитификации частиц
+      if( TMath::Abs( femtoTrack2 -> eta() ) > 1.0 || femtoTrack2 -> nHits() < 15 || 
+          femtoTrack2 -> p() < 0.15 || femtoTrack2 -> p() > 5.0) {
+         continue;
       }
-      if (femtoTrack->pt()>0 && femtoTrack->pt()<2){
-        omega = femtoTrack->pt();}
+      */
+      // для заряженных адронов
+      if( TMath::Abs( femtoTrack2 -> eta() ) > 1.0 ||
+          femtoTrack2 -> nHits() < 15 ||
+          femtoTrack2 -> pt() < 0.2 ) {
+         continue;
+      }
+      if (/*femtoTrack2->pt()>0 &&*/ femtoTrack2->pt()<2){
+        omega = femtoTrack2->pt();}
       else {
         omega = 2;
       }
-      if(femtoTrack->eta()>0.05){
-        v2 = TMath::Cos(2*(femtoTrack->phi()-Psi2_flat_east));
-        v3 = TMath::Cos(3*(femtoTrack->phi()-Psi3_flat_east));
-        N_east++;
-      }
+      //EAST
+      if(femtoTrack2->eta()>0.05){
+        v2 = TMath::Cos(2*(femtoTrack2->phi()-Psi2_flat_west)) / TMath::Sqrt(P2_square_resolution2 -> GetBinContent(P2_square_resolution2->FindBin(event->cent9())));
+        v3 = TMath::Cos(3*(femtoTrack2->phi()-Psi3_flat_west)) / TMath::Sqrt(P2_square_resolution2 -> GetBinContent(P2_square_resolution2->FindBin(event->cent9())));
+        //N_east++;
+          
+        P_v2_cent -> Fill(event->cent9(), v2, 1);
+        P_v2_cent_east -> Fill(event->cent9(), v2, 1);
+        P_v3_cent -> Fill(event->cent9(), v3, 1);
+        P_v3_cent_east -> Fill(event->cent9(), v3, 1);
 
-      if(femtoTrack->eta()<-0.05){
-        v2 = TMath::Cos(2*(femtoTrack->phi()-Psi2_flat_west));
-        v3 = TMath::Cos(3*(femtoTrack->phi()-Psi3_flat_west));
-        N_west++;
+        P_v2_pt -> Fill(femtoTrack2->pt(),event->cent9(), v2, omega);
+        P_v2_pt_east -> Fill(femtoTrack2->pt(), event->cent9(), v2, omega);
+        P_v3_pt -> Fill(femtoTrack2->pt(), event->cent9(), v3, omega);
+        P_v3_pt_east -> Fill(femtoTrack2->pt(), event->cent9(), v3, omega);
       }
-      P_v2_pt -> Fill(femtoTrack->pt(), event->cent9(), v2/TMath::Sqrt(P2_square_resolution2 -> GetBinContent(P2_square_resolution2->FindBin(event->cent9()))), omega);
-      P_v3_pt -> Fill(femtoTrack->pt(), event->cent9(), v3/TMath::Sqrt(P2_square_resolution3 -> GetBinContent(P2_square_resolution3->FindBin(event->cent9()))), omega);
-      P_v2_cent -> Fill(event->cent9(), v2/TMath::Sqrt(P2_square_resolution2 -> GetBinContent(P2_square_resolution2->FindBin(event->cent9()))), omega);
-      P_v3_cent -> Fill(event->cent9(), v3/TMath::Sqrt(P2_square_resolution3 -> GetBinContent(P2_square_resolution3->FindBin(event->cent9()))), omega);
-    }
+      //WEST 
+      if(femtoTrack2->eta()<-0.05){
+        v2 = TMath::Cos(2*(femtoTrack2->phi()-Psi2_flat_east)) / TMath::Sqrt(P2_square_resolution2 -> GetBinContent(P2_square_resolution2->FindBin(event->cent9())));
+        v3 = TMath::Cos(3*(femtoTrack2->phi()-Psi3_flat_east)) / TMath::Sqrt(P2_square_resolution2 -> GetBinContent(P2_square_resolution2->FindBin(event->cent9())));
+        //N_west++;
+
+        P_v2_cent -> Fill(event->cent9(), v2, 1);
+        P_v2_cent_west -> Fill(event->cent9(), v2, 1);
+        P_v3_cent -> Fill(event->cent9(), v3, 1);
+        P_v3_cent_west -> Fill(event->cent9(), v3, 1);
+
+        P_v2_pt -> Fill(femtoTrack2->pt(),event->cent9(), v2, omega);
+        P_v2_pt_west -> Fill(femtoTrack2->pt(), event->cent9(), v2, omega);
+        P_v3_pt -> Fill(femtoTrack2->pt(), event->cent9(), v3, omega);
+        P_v3_pt_west -> Fill(femtoTrack2->pt(), event->cent9(),v3, omega);
+      }
+    }//end second track loop
 
   } //for(Long64_t iEvent=0; iEvent<events2read; iEvent++)
 
-  //Saving our files
+
+
+
+
+
+
+
+  //Saving our files-----------------------------------------
   TFile *savefile = new TFile(outFileName, "RECREATE");
 
   //_west
-  H_Psi2_west->Write();
-  H_Psi3_west->Write();
-  H_Psi2_recenter_west->Write();
-  H_Psi3_recenter_west->Write();
-  H_Psi2_flat_west->Write();
-  H_Psi3_flat_west->Write();
+  if( N_west != 0 ){
+    H_Psi2_west->Write();
+    H_Psi3_west->Write();
+    H_Psi2_recenter_west->Write();
+    H_Psi3_recenter_west->Write();
+    H_Psi2_flat_west->Write();
+    H_Psi3_flat_west->Write();
+  }
   //_east
-  H_Psi2_east->Write();
-  H_Psi3_east->Write();
-  H_Psi2_recenter_east->Write();
-  H_Psi3_recenter_east->Write();
-  H_Psi2_flat_east->Write();
-  H_Psi3_flat_east->Write();
+  if( N_east != 0 ){
+    H_Psi2_east->Write();
+    H_Psi3_east->Write();
+    H_Psi2_recenter_east->Write();
+    H_Psi3_recenter_east->Write();
+    H_Psi2_flat_east->Write();
+    H_Psi3_flat_east->Write();
+  }
 
   P_v2_pt->Write();
   P_v3_pt->Write();
   P_v2_cent->Write();
   P_v3_cent->Write();
+  //east
+  P_v2_pt_east->Write();
+  P_v3_pt_east->Write();
+  P_v2_cent_east->Write();
+  P_v3_cent_east->Write();
+  //west
+  P_v2_pt_west->Write();
+  P_v3_pt_west->Write();
+  P_v2_cent_west->Write();
+  P_v3_cent_west->Write();
 
   savefile->Close();
 
